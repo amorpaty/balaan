@@ -1,18 +1,75 @@
-# BALAAN Frontend Engineer Assignment
-발란에서는 지원자 여러분의 기술적 역량과 문제 해결 접근 방식을 평가하기 위해 과제 전형을 진행하고 있습니다. 안내문서를 참고하시어 주어진 기간 내에 과제를 수행해 주세요 🙂
+# Nuxt 3 Minimal Starter
 
-## 프로젝트 설정 및 실행 방법
-> 프로젝트 설정 및 실행 방법을 작성해주세요
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## 기술 스택 및 도구
-> 사용한 기술 스택 및 도구를 작성해주세요
+## Setup
 
-## 구현여부
-각 섹션 별 구현한 내용을 상세히 설명해 주세요. 어려움이나 오류가 있었던 경우, 함께 작성해주시면 좋습니다.
+Make sure to install the dependencies:
 
-> 선택 구현의 경우, 구현된 내용만 서술해주세요!
+```bash
+# npm
+npm install
 
-### 1️⃣ 컴포넌트 구현
-### 2️⃣ 상품 목록 기능
-### 3️⃣ 상품 필터 기능
-### 4️⃣ 선택 구현
+# pnpm
+pnpm install
+
+# yarn
+yarn install
+
+# bun
+bun install
+```
+
+## Development Server
+
+Start the development server on `http://localhost:3000`:
+
+```bash
+# npm
+npm run dev
+
+# pnpm
+pnpm run dev
+
+# yarn
+yarn dev
+
+# bun
+bun run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
