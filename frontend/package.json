@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.7.5",
     "nuxt": "^3.13.0",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-simple-range-slider": "^1.1.0"
   }
 }

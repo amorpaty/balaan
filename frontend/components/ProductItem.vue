@@ -13,7 +13,7 @@
     </div>
     <!-- 페이지 네비게이션 -->
     <div class="pagination">
-      <button @click="changePage(pageNumber)" v-for="pageNumber in totalPages" :key="pageNumber" :class="{ active: pageNumber === currentPage }" class="custom-button">
+      <button @click="changePage(pageNumber)" v-for="pageNumber in totalPages" :key="pageNumber" class="custom-button">
         {{ pageNumber }}
       </button>
     </div>
@@ -59,8 +59,6 @@ export default {
       try {
         const response = await axios.get('http://localhost:3030/products/' + productNo, );
 
-        console.log(response);
-        debugger;
       }catch (error) {
         console.error('상품 상세 정보를 가져오는데 실패했습니다:', error);
       }

@@ -10,11 +10,14 @@
         상품유형
       </button> 
       <button class="filter-dropdown" @click="toggleFilterPopup()">
-        빈티지 등급
+        <p>빈티지 등급</p>
       </button>
-      <select class="filter-dropdown" @click="toggleFilterPopup()">        
-        <option value="">정렬</option>
-      </select>
+      <button class="filter-dropdown" @click="toggleFilterPopup()">
+        배송
+      </button>
+      <button class="filter-dropdown" @click="toggleFilterPopup()">        
+        가격
+      </button>
     </div>
     <!-- 상품 목록 -->
     <product-item/>
@@ -69,10 +72,10 @@ export default {
 }
 
 .filter-dropdown {
-  padding: 8px;
-  font-size: 14px;
+  font-size: 11px;
   flex: 1;
   margin: 4px;
+  cursor: pointer;
 }
 
 

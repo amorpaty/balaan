@@ -7,85 +7,28 @@
             <button @click="closeFilterPopup" class="close-button">✖</button>
         </header>
       </div>
-      <div class="filter-content">
-        <div class="filter-title" @click="toggleCategory">카테고리</div>
-        <transition name="slide">
-          <div v-if="isCategoryVisible" class="filter-group">
-            <button class="filter-option" @click="selectFilter('전체')">전체</button>
-            <button class="filter-option" @click="selectFilter('의류')">의류</button>
-            <button class="filter-option" @click="selectFilter('신발')">신발</button>
-            <button class="filter-option" @click="selectFilter('가방')">가방</button>
-          </div>
-        </transition>
-
-        <div class="filter-title" @click="toggleType">상품유형</div>
-        <transition name="slide">
-          <div v-if="isTypeVisible" class="filter-group">
-            <button class="filter-option" @click="selectFilter('전체')">전체</button>
-            <button class="filter-option" @click="selectFilter('럭셔리')">럭셔리</button>
-            <button class="filter-option" @click="selectFilter('부티크')">부티크</button>
-            <button class="filter-option" @click="selectFilter('빈티지')">빈티지</button>
-          </div>
-        </transition>
-
-        <div class="filter-title" @click="toggleGrade">빈티지 등급</div>
-        <transition name="slide">
-          <div v-if="isGradeVisible" class="filter-group">
-            <button class="filter-option vintage" @click="selectFilter('전체')">전체</button>
-            <button class="filter-option vintage" @click="selectFilter('S+')">S+</button>
-            <button class="filter-option vintage" @click="selectFilter('A+')">A+</button>
-            <button class="filter-option vintage" @click="selectFilter('A')">A</button>
-            <button class="filter-option vintage" @click="selectFilter('B+')">B+</button>
-            <button class="filter-option vintage" @click="selectFilter('B')">B</button>
-          </div>
-        </transition>
-
-        <div class="filter-title" @click="togglePrice">가격</div>
-        <transition name="slide">
-          <div v-if="isPriceVisible" class="filter-group">
-            <input type="range" min="0" max="3000000" v-model="priceRange" class="price-range"/>
-            <p>{{ priceRange }}원</p>
-          </div>
-        </transition>
-        <button class="apply-button" @click="applyFilter">적용</button>
-      </div>
+      <!--Filter Select -->
+      <Select></Select>
     </div>
   </div>
 </template>
 
 <script>
-import ProductListPage from '../app.vue'
+import Select from './Select.vue';
 
 export default {
   name: 'FilterPopup',
   props: ["isFilterPopupVisible"],
   data() {
     return {
-      isCategoryVisible: true,
-      isTypeVisible: true,
-      isGradeVisible: false,
-      isPriceVisible: true,
-      priceRange: 0,
   }},
+  components : {
+    Select
+  },
   methods: {
     closeFilterPopup() {
       this.$emit('close-popup');
     },
-    toggleCategory() {
-      this.isCategoryVisible = !this.isCategoryVisible;
-    },
-    toggleType() {
-      this.isTypeVisible = !this.isTypeVisible;
-    },
-    toggleGrade() {
-      this.isGradeVisible = !this.isGradeVisible;
-    },
-    togglePrice() {
-      this.isPriceVisible = !this.isPriceVisible;
-    },
-    applyFilter() {
-      ProductListPage.toggleFilterPopup(); // 필터 적용 후 팝업 닫기
-    }
   }
 };
 </script>
@@ -93,18 +36,6 @@ export default {
 <style scoped>
 
 /* 필터 팝업 스타일 */
-/* 슬라이드 애니메이션 스타일 */
-.slide-enter-active, .slide-leave-active {
-  transition: max-height 0.3s ease;
-}
-.slide-enter, .slide-leave-to {
-  max-height: 0;
-  overflow: hidden;
-}
-.slide-enter-to, .slide-leave {
-  max-height: 300px; /* 원하는 최대 높이로 설정 */
-}
-
 .filter-popup-overlay {
   position: fixed;
   top: 0;
@@ -151,82 +82,10 @@ export default {
   width: 100%;
   margin-left: 27px;
 }
-
-.filter-content .filter-title{
-  font-size: large;
-  font-weight: bold;
-  margin-bottom: 5px;
-  margin-left: 0;
-}
-
 .close-button {
   background: none;
   border: none;
   font-size: 20px;
   cursor: pointer;
-}
-
-.filter-content {
-  padding: 16px;
-}
-
-.filter-group {
-  margin-bottom: 20px;
-}
-
-.filter-option:nth-child(2n+1) {
-  display: inline;
-  width: 45%;
-  padding: 8px 16px;
-  margin : 1px 30px 1px 1px;
-  border: 1px solid #ddd;
-  margin-bottom: 8px;
-  cursor: pointer;
-  background-color: #f9f9f9;
-}
-
-.filter-option:nth-child(2n) {
-  display: inline;
-  width: 45%;
-  padding: 8px 16px;
-  border: 1px solid #ddd;
-  margin-bottom: 8px;
-  cursor: pointer;
-  background-color: #f9f9f9;
-}
-
-.filter-option.vintage{
-  width: 30%;
-  margin: 1px 1px 8px 1px;
-}
-
-
-.filter-option.vintage:nth-child(3n+2){
-  width: 30%;
-  margin: 0px 15px 8px 15px;
-}
-
-.filter-option:hover {
-  background-color: #ececec;
-}
-
-.price-range {
-  width: 100%;
-  margin-top: 8px;
-}
-
-.apply-button {
-  display: block;
-  width: 100%;
-  padding: 12px 0;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  border: none;
-  cursor: pointer;
-}
-
-.apply-button:hover {
-  background-color: #333;
 }
 </style>
