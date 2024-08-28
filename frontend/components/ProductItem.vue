@@ -1,6 +1,6 @@
 <template>
     <div class="product-list">
-      <div class="product-item" v-for="product in products" :key="product.id">
+      <div class="product-item" v-for="product in products" :key="product.productNo" @click="detailProduct(product.productNo)">
         <img :src="product.image" alt="Product Image" class="product-image"/>
         <div class="product-info">
           <h2 class="product-name">{{ product.productName }}</h2>
@@ -54,6 +54,16 @@ export default {
     }, 
     changePage(page) {
       this.fetchProducts(page);
+    },
+    async detailProduct(productNo){
+      try {
+        const response = await axios.get('http://localhost:3030/products/' + productNo, );
+
+        console.log(response);
+        debugger;
+      }catch (error) {
+        console.error('상품 상세 정보를 가져오는데 실패했습니다:', error);
+      }
     }
   },
   mounted() {
@@ -76,6 +86,7 @@ export default {
   padding: 16px;
   background-color: #fff;
   text-align: center;
+  cursor: pointer;
 }
 
 .product-image {

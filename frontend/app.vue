@@ -1,49 +1,60 @@
 <template>
+  <header class="header">상품 목록</header>
   <div class="product-list-page">
     <!-- 필터 및 정렬 옵션 -->
     <div class="filter-bar">
-      <select class="filter-dropdown">
-        <option value="">카테고리</option>
-        <option value="category1">의류</option>
-        <option value="category2">신발</option>
-        <option value="category3">가방</option>
-      </select>
-      <select class="filter-dropdown">
-        <option value="">상품유형</option>
-        <option value="luxury">럭셔리</option>
-        <option value="vintage">빈티지</option>
-      </select>
-      <select class="filter-dropdown">
-        <option value="">빈티지 등급</option>
-        <option value="luxury">럭셔리</option>
-        <option value="vintage">빈티지</option>
-      </select>
-      <select class="filter-dropdown">
+      <button class="filter-dropdown" @click="toggleFilterPopup()">
+        카테고리
+      </button>
+      <button class="filter-dropdown" @click="toggleFilterPopup()">
+        상품유형
+      </button> 
+      <button class="filter-dropdown" @click="toggleFilterPopup()">
+        빈티지 등급
+      </button>
+      <select class="filter-dropdown" @click="toggleFilterPopup()">        
         <option value="">정렬</option>
-        <option value="price_asc">가격 낮은순</option>
-        <option value="price_desc">가격 높은순</option>
-        <option value="newest">최신순</option>
       </select>
     </div>
-
     <!-- 상품 목록 -->
     <product-item/>
+    <!-- 필터 팝업 -->
+    <filter-popup v-bind:isFilterPopupVisible="isFilterPopupVisible" @close-popup="toggleFilterPopup"></filter-popup>
   </div>
 </template>
 
 <script>
+import FilterPopup from './components/FilterPopup.vue';
 import ProductItem from './components/ProductItem.vue';
 
 export default {
   name: 'ProductListPage',
   components: {
-    ProductItem
+    ProductItem,
+    FilterPopup
   },
-  
+  data() {
+    return {
+      isFilterPopupVisible: false, // 필터 팝업 표시 여부
+  }},
+  methods: {
+    toggleFilterPopup() {
+      this.isFilterPopupVisible = !this.isFilterPopupVisible;
+    },
+  }
 };
 </script>
 
 <style scoped>
+.header{
+  padding : 15px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: larger;
+  font-weight: bold;
+}
+
 .product-list-page {
   padding: 16px;
   max-width: 500px;
@@ -65,6 +76,7 @@ export default {
 }
 
 
+
 /* 반응형 스타일 */
 @media (max-width: 500px) {
   .filter-bar {
@@ -80,5 +92,6 @@ export default {
   .product-list {
     grid-template-columns: 1fr;
   }
+
 }
 </style>
