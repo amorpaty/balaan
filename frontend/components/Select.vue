@@ -110,8 +110,13 @@ export default {
 
             this.fetchProductCount();
         }, 
+        resetFilter(){ // 필터 초기화 
+          this.category = '';
+          this.type = '';
+          this.grade = [];
+          this.value = [0, 3000000];
+        },
         applyFilter() {
-            ProductListPage.toggleFilterPopup(); // 필터 적용 후 팝업 닫기
         },
         watch(){
           this.fetchProductCount();
