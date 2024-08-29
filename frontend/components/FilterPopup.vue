@@ -19,6 +19,9 @@ import Select from './Select.vue';
 export default {
   name: 'FilterPopup',
   props: ["isFilterPopupVisible"],
+  components : {
+    Select,
+  },
   data() {
     return {
   }},
@@ -29,7 +32,7 @@ export default {
     closeFilterPopup() {
       this.$emit('close-popup');
     },
-  }
+  },
 };
 </script>
 
@@ -56,7 +59,7 @@ export default {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-height: 80vh; /* 팝업의 최대 높이를 설정하여 화면을 넘지 않도록 함 */
+  max-height: 92vh; /* 팝업의 최대 높이를 설정하여 화면을 넘지 않도록 함 */
   overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능하도록 설정 */
   scrollbar-width: thin;
 }
