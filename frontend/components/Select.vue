@@ -76,6 +76,7 @@ import RangeSlider from 'vue-simple-range-slider';
 
 export default {
     name: 'FilterSelect',
+    props : ["filterData"],
     data() {
       return {
         isCategoryVisible: true,
@@ -83,14 +84,12 @@ export default {
         isvintageGradeVisible: false,
         isDeliveryTypeVisible : true,
         isPriceVisible: true,
-        category : '', //카테고리
-        productType : '',     //상품유형
-        vintageGrade : [],    //빈티지타입
-        deliveryType : [],   //배송
-        priveRange : [],     //가격
-        value: [0, 3000000], //가격
-        totalProductCnt : 0,
-        
+        category : Object.keys(this.filterData).length != 0 &&  this.filterData.categry != undefined ? this.filterData.category : '',               //카테고리
+        productType : Object.keys(this.filterData).length != 0 &&  this.filterData.productType != undefined ? this.filterData.productType : '',     //상품유형
+        vintageGrade : Object.keys(this.filterData).length != 0 &&  this.filterData.vintageGrade.length != 0 ? this.filterData.vintageGrade : [],   //빈티지타입
+        deliveryType : Object.keys(this.filterData).length != 0 &&  this.filterData.deliveryType.length != 0 ? this.filterData.deliveryType : [],    //배송
+        value: Object.keys(this.filterData).length != 0 && this.filterData.value.length != 0 ? this.filterData.value : [0, 3000000],  //가격
+        totalProductCnt : 0,  //상품갯수
     }},
     components : {
         RangeSlider
@@ -165,7 +164,7 @@ export default {
         }, 
         resetFilter(){ // 필터 초기화 
           this.category = '';
-          this.type = '';
+          this.productType = '';
           this.vintageGrade = [];
           this.deliveryType = [];
           this.value = [0, 3000000];
@@ -173,15 +172,13 @@ export default {
           this.fetchProductCount();
         },
         applyFilter() { // 필터 적용하기 
-
           let data = {
             category : this.category =='' ? undefined : this.category ,
-            type : this.type == '' ? undefined : this.type,
+            productType : this.productType == '' ? undefined : this.productType,
             vintageGrade : this.vintageGrade,
             deliveryType : this.deliveryType,
             value : this.value,
           }
-
           this.$emit('sendData', data);
         }
     }, 

@@ -1,28 +1,30 @@
 <template>
-  <header class="header">상품 목록</header>
-  <div class="product-list-page">
-    <!-- 필터 및 정렬 옵션 -->
-    <div class="filter-bar">
-      <button class="filter-dropdown" @click="toggleFilterPopup()">
-        카테고리
-      </button>
-      <button class="filter-dropdown" @click="toggleFilterPopup()">
-        상품유형
-      </button> 
-      <button class="filter-dropdown" @click="toggleFilterPopup()">
-        <p>빈티지 등급</p>
-      </button>
-      <button class="filter-dropdown" @click="toggleFilterPopup()">
-        배송
-      </button>
-      <button class="filter-dropdown" @click="toggleFilterPopup()">        
-        가격
-      </button>
+  <div>
+    <header class="header">상품 목록</header>
+    <div class="product-list-page">
+      <!-- 필터 및 정렬 옵션 -->
+      <div class="filter-bar">
+        <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && this.filterData.category != undefined}" @click="toggleFilterPopup()">
+          카테고리 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.category != undefined"> 1 </span>
+        </button>
+        <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && this.filterData.productType != undefined}" @click="toggleFilterPopup()">
+          상품유형 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.productType != undefined"> 1 </span>
+        </button> 
+        <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && this.filterData.vintageGrade.length > 0}" @click="toggleFilterPopup()">
+          빈티지 등급 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.vintageGrade.length > 0"> {{this.filterData.vintageGrade.length}} </span>
+        </button>
+        <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && this.filterData.deliveryType.length > 0}" @click="toggleFilterPopup()">
+          배송 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.deliveryType.length > 0"> 1 </span>
+        </button>
+        <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && (this.filterData.value[0] != 0 || this.filterData.value[0] != 3000000)}" @click="toggleFilterPopup()">        
+          가격
+        </button>
+      </div>
+      <!-- 상품 목록 -->
+      <product-item v-bind:filterData="filterData"/>
+      <!-- 필터 팝업 -->
+      <filter-popup v-bind:isFilterPopupVisible="isFilterPopupVisible" v-bind:filterData="filterData" @close-popup="toggleFilterPopup"></filter-popup>
     </div>
-    <!-- 상품 목록 -->
-    <product-item v-bind:filterData="filterData"/>
-    <!-- 필터 팝업 -->
-    <filter-popup v-bind:isFilterPopupVisible="isFilterPopupVisible" @close-popup="toggleFilterPopup"></filter-popup>
   </div>
 </template>
 
@@ -79,9 +81,19 @@ export default {
 
 .filter-dropdown {
   font-size: 11px;
+  font-weight: bold;
+  padding: 5px;
   flex: 1;
   margin: 4px;
+  background-color: #fff;
+  border: 0.5px solid;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+.filter-dropdown.active{
+  color: blue;
+  border: 2px solid;
 }
 
 /* 반응형 스타일 */

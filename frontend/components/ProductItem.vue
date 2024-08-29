@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div class="product-list">
       <div class="product-item" v-for="product in this.products" :key="product.productNo" @click="detailProduct(product.productNo)">
         <img :src="product.image" alt="Product Image" class="product-image"/>
@@ -17,6 +18,7 @@
         {{ pageNumber }}
       </button>
     </div>
+  </div>  
 </template>
 
 <script>
@@ -25,16 +27,16 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      totalCount : Number,
-      currentPage: 1,
-      totalPages: 0,
+      totalCount : Number, // 상품 총 갯수 
+      currentPage: 1, // 현재 페이지
+      totalPages: 0, // 표출된 페이지 수  
       pageSize: 30,  // 한 페이지에 표시할 항목 수
       products: [],  // 초기 빈 배열
     };
   },
   props: ["filterData"],
-  methods: {
-    async fetchProducts(page = 1) {
+  methods: {  
+    async fetchProducts(page = 1) { // 상품목록 조회
 
       let params =  {
            page: page,
@@ -44,7 +46,7 @@ export default {
       if(Object.keys(this.filterData).length != 0){
          Object.assign(params, this.filterData);
          params.minPrice = this.filterData.value[0];
-         params.manPrice = this.filterData.value[1];
+         params.maxPrice = this.filterData.value[1];
       }
 
       try {
@@ -61,13 +63,12 @@ export default {
         console.error('상품 목록을 가져오는데 실패했습니다:', error);
       }
     }, 
-    changePage(page) {
+    changePage(page) { //페이징 처리
       this.fetchProducts(page);
     },
-    async detailProduct(productNo){
+    async detailProduct(productNo){ //상품 디테일 팝업
       try {
-        const response = await axios.get('http://localhost:3030/products/' + productNo, );
-
+        const response = await axios.get('http://localhost:3030/products/' + productNo, );        
       }catch (error) {
         console.error('상품 상세 정보를 가져오는데 실패했습니다:', error);
       }
@@ -76,7 +77,7 @@ export default {
   mounted() {
     this.fetchProducts(); // 컴포넌트가 마운트될 때 데이터 가져오기
   },
-  watch : {
+  watch : { //변경된 필터 감지 후 필터에 해당하는 상품 목록 조회
     filterData(newValue, oldValue){
       this.fetchProducts();
     }
