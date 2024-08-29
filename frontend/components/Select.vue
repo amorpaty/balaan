@@ -105,7 +105,7 @@ export default {
             this.isTypeVisible = !this.isTypeVisible;
         },
         togglevintageGrade() {
-            if(this.type === 'vintage'){
+            if(this.productType === 'vintage'){
                 this.isvintageGradeVisible = !this.isvintageGradeVisible;
             }
         },

@@ -16,7 +16,7 @@
         <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && this.filterData.deliveryType.length > 0}" @click="toggleFilterPopup()">
           배송 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.deliveryType.length > 0"> 1 </span>
         </button>
-        <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && (this.filterData.value[0] != 0 || this.filterData.value[0] != 3000000)}" @click="toggleFilterPopup()">        
+        <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && (this.filterData.value[0] != 0 || this.filterData.value[1] != 3000000)}" @click="toggleFilterPopup()">        
           가격
         </button>
       </div>
