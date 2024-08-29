@@ -1,6 +1,6 @@
 <template>
     <div class="product-list">
-      <div class="product-item" v-for="product in products" :key="product.productNo" @click="detailProduct(product.productNo)">
+      <div class="product-item" v-for="product in this.products" :key="product.productNo" @click="detailProduct(product.productNo)">
         <img :src="product.image" alt="Product Image" class="product-image"/>
         <div class="product-info">
           <h2 class="product-name">{{ product.productName }}</h2>
@@ -32,19 +32,28 @@ export default {
       products: [],  // 초기 빈 배열
     };
   },
+  props: ["filterData"],
   methods: {
     async fetchProducts(page = 1) {
+
+      let params =  {
+           page: page,
+           size: this.pageSize
+      }
+
+      if(Object.keys(this.filterData).length != 0){
+         Object.assign(params, this.filterData);
+         params.minPrice = this.filterData.value[0];
+         params.manPrice = this.filterData.value[1];
+      }
+
       try {
-        const response = await axios.get('http://localhost:3030/products', {
-          params: {
-            page: page,
-            size: this.pageSize
-          }});
+        const response = await axios.get('http://localhost:3030/products', {params});
 
         if(response.status == 200){
           this.products = response.data.list;
           this.totalCount = response.data.totalCount;
-          this.totalPages = Math.ceil(this.totalCount / this.pageSize);
+          this.totalPages = Math.ceil(this.totalCount / (this.pageSize == undefined? 30 : this.pageSize));
         }else{
           throw new Exception();
         }
@@ -66,6 +75,11 @@ export default {
   },
   mounted() {
     this.fetchProducts(); // 컴포넌트가 마운트될 때 데이터 가져오기
+  },
+  watch : {
+    filterData(newValue, oldValue){
+      this.fetchProducts();
+    }
   }
 };
 </script>

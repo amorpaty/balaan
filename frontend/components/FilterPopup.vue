@@ -8,7 +8,7 @@
         </header>
       </div>
       <!--Filter Select -->
-      <Select></Select>
+      <Select @sendData="sendData"></Select>
     </div>
   </div>
 </template>
@@ -29,7 +29,10 @@ export default {
     Select
   },
   methods: {
-    closeFilterPopup() {
+    sendData(filterData){
+      this.$emit('close-popup', filterData)
+    },
+    closeFilterPopup() { //팝업 닫기
       this.$emit('close-popup');
     },
   },

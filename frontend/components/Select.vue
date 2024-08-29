@@ -12,22 +12,22 @@
         <div class="filter-title" @click="toggleType">상품유형</div>
         <transition name="slide">
           <div v-if="isTypeVisible" class="filter-group">
-            <button class="filter-option" :class="{ active: type == ''}" @click="selectFilter('type', '')">전체</button>
-            <button class="filter-option" :class="{ active: type == 'luxuary'}" @click="selectFilter('type','luxuary')">럭셔리</button>
-            <button class="filter-option" :class="{ active: type == 'boutique'}" @click="selectFilter('type','boutique')">부티크</button>
-            <button class="filter-option" :class="{ active: type == 'vintage'}" @click="selectFilter('type','vintage')">빈티지</button>
+            <button class="filter-option" :class="{ active: productType == ''}" @click="selectFilter('productType', '')">전체</button>
+            <button class="filter-option" :class="{ active: productType == 'luxuary'}" @click="selectFilter('productType','luxuary')">럭셔리</button>
+            <button class="filter-option" :class="{ active: productType == 'boutique'}" @click="selectFilter('productType','boutique')">부티크</button>
+            <button class="filter-option" :class="{ active: productType == 'vintage'}" @click="selectFilter('productType','vintage')">빈티지</button>
           </div>
         </transition>
 
-        <div class="filter-title" @click="toggleGrade">빈티지 등급</div>
+        <div class="filter-title" @click="togglevintageGrade">빈티지 등급</div>
         <transition name="slide">
-          <div v-if="isGradeVisible" class="filter-group">
-            <button class="filter-option vintage" :class="{ active: grade.includes('')}"  @click="selectFilter('grade', '')">전체</button>
-            <button class="filter-option vintage" :class="{ active: grade.includes('S+')}"  @click="selectFilter('grade','S+')">S+</button>
-            <button class="filter-option vintage" :class="{ active: grade.includes('A+')}"  @click="selectFilter('grade','A+')">A+</button>
-            <button class="filter-option vintage" :class="{ active: grade.includes('A')}"  @click="selectFilter('grade','A')">A</button>
-            <button class="filter-option vintage" :class="{ active: grade.includes('B+')}"  @click="selectFilter('grade','B+')">B+</button>
-            <button class="filter-option vintage" :class="{ active: grade.includes('B')}"  @click="selectFilter('grade','B')">B</button>
+          <div v-if="isvintageGradeVisible" class="filter-group">
+            <button class="filter-option vintage" :class="{ active: vintageGrade.includes('')}"  @click="selectFilter('vintageGrade', '')">전체</button>
+            <button class="filter-option vintage" :class="{ active: vintageGrade.includes('S+')}"  @click="selectFilter('vintageGrade','S+')">S+</button>
+            <button class="filter-option vintage" :class="{ active: vintageGrade.includes('A+')}"  @click="selectFilter('vintageGrade','A+')">A+</button>
+            <button class="filter-option vintage" :class="{ active: vintageGrade.includes('A')}"  @click="selectFilter('vintageGrade','A')">A</button>
+            <button class="filter-option vintage" :class="{ active: vintageGrade.includes('B+')}"  @click="selectFilter('vintageGrade','B+')">B+</button>
+            <button class="filter-option vintage" :class="{ active: vintageGrade.includes('B')}"  @click="selectFilter('vintageGrade','B')">B</button>
           </div>
         </transition>
         
@@ -80,12 +80,12 @@ export default {
       return {
         isCategoryVisible: true,
         isTypeVisible: true,
-        isGradeVisible: false,
+        isvintageGradeVisible: false,
         isDeliveryTypeVisible : true,
         isPriceVisible: true,
         category : '', //카테고리
-        type : '',     //상품유형
-        grade : [],    //빈티지타입
+        productType : '',     //상품유형
+        vintageGrade : [],    //빈티지타입
         deliveryType : [],   //배송
         priveRange : [],     //가격
         value: [0, 3000000], //가격
@@ -105,9 +105,9 @@ export default {
         toggleType() {
             this.isTypeVisible = !this.isTypeVisible;
         },
-        toggleGrade() {
+        togglevintageGrade() {
             if(this.type === 'vintage'){
-                this.isGradeVisible = !this.isGradeVisible;
+                this.isvintageGradeVisible = !this.isvintageGradeVisible;
             }
         },
         toggleDeliveryType(){
@@ -122,8 +122,8 @@ export default {
               category: this.category == '' ? undefined : this.category,
               minPrice: parseInt(this.value[0], 10) || 0,
               maxPrice: parseInt(this.value[1], 10) || 3000000,
-              productType: this.type,
-              vintageGrade: this.grade,
+              productType: this.productType,
+              vintageGrade: this.vintageGrade,
               deliveryType : this.deliveryType,
             }});
 
@@ -133,24 +133,24 @@ export default {
             throw new Exception();
           }
         },
-        selectFilter(btnType, btnvalue){
-            //btnType : category : 카테고리, type : 상품유형, grade : 빈티지등급 
+        selectFilter(btnType, btnvalue){ //필터 선택 
+            //btnType : category : 카테고리, type : 상품유형, vintageGrade : 빈티지등급 
             //btnvalue : 
             if(btnType === 'category'){
               this.category = btnvalue;
-            }else if(btnType === 'grade'){
-              if(this.grade.includes(btnvalue)){
-                this.grade = this.grade.filter((item, index) => {return item != btnvalue;});
+            }else if(btnType === 'vintageGrade'){
+              if(this.vintageGrade.includes(btnvalue)){
+                this.vintageGrade = this.vintageGrade.filter((item, index) => {return item != btnvalue;});
               }else{
-                this.grade.push(btnvalue);
+                this.vintageGrade.push(btnvalue);
               }
-            }else if(btnType === 'type' && btnvalue === 'vintage'){ 
-                this.type = btnvalue;
-                this.isGradeVisible = true;  
-            }else if(btnType === 'type' && btnvalue !== 'vintage'){
-                this.type = btnvalue;
-                this.isGradeVisible = false;
-                this.grade = [];
+            }else if(btnType === 'productType' && btnvalue === 'vintage'){ 
+                this.productType = btnvalue;
+                this.isvintageGradeVisible = true;  
+            }else if(btnType === 'productType' && btnvalue !== 'vintage'){
+                this.productType = btnvalue;
+                this.isvintageGradeVisible = false;
+                this.vintageGrade = [];
             }else if(btnType === 'deliveryType'){
               if(this.deliveryType.includes(btnvalue)){
                 this.deliveryType = this.deliveryType.filter((item, index) => {return item != btnvalue;});
@@ -166,13 +166,23 @@ export default {
         resetFilter(){ // 필터 초기화 
           this.category = '';
           this.type = '';
-          this.grade = [];
+          this.vintageGrade = [];
           this.deliveryType = [];
           this.value = [0, 3000000];
           this.selectFilter('type', '', null);
           this.fetchProductCount();
         },
-        applyFilter() {
+        applyFilter() { // 필터 적용하기 
+
+          let data = {
+            category : this.category =='' ? undefined : this.category ,
+            type : this.type == '' ? undefined : this.type,
+            vintageGrade : this.vintageGrade,
+            deliveryType : this.deliveryType,
+            value : this.value,
+          }
+
+          this.$emit('sendData', data);
         }
     }, 
   };

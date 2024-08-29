@@ -20,7 +20,7 @@
       </button>
     </div>
     <!-- 상품 목록 -->
-    <product-item/>
+    <product-item v-bind:filterData="filterData"/>
     <!-- 필터 팝업 -->
     <filter-popup v-bind:isFilterPopupVisible="isFilterPopupVisible" @close-popup="toggleFilterPopup"></filter-popup>
   </div>
@@ -39,10 +39,16 @@ export default {
   data() {
     return {
       isFilterPopupVisible: false, // 필터 팝업 표시 여부
+      filterData : {},
   }},
   methods: {
-    toggleFilterPopup() {
-      this.isFilterPopupVisible = !this.isFilterPopupVisible;
+    toggleFilterPopup(filterData) {
+      if(filterData){ //필터데이터가 있으면 적용
+        this.isFilterPopupVisible = !this.isFilterPopupVisible;
+        this.filterData = filterData;
+      }else{ //필터데이터가 없으면 닫기 버튼 
+        this.isFilterPopupVisible = !this.isFilterPopupVisible;
+      }
     },
   }
 };
@@ -77,8 +83,6 @@ export default {
   margin: 4px;
   cursor: pointer;
 }
-
-
 
 /* 반응형 스타일 */
 @media (max-width: 500px) {
