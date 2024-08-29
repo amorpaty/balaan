@@ -21,7 +21,7 @@
 
         <div class="filter-title" @click="togglevintageGrade">빈티지 등급</div>
         <transition name="slide">
-          <div v-if="isvintageGradeVisible" class="filter-group">
+          <div v-if="productType == 'vintage' || isvintageGradeVisible" class="filter-group">
             <button class="filter-option vintage" :class="{ active: vintageGrade.includes('')}"  @click="selectFilter('vintageGrade', '')">전체</button>
             <button class="filter-option vintage" :class="{ active: vintageGrade.includes('S+')}"  @click="selectFilter('vintageGrade','S+')">S+</button>
             <button class="filter-option vintage" :class="{ active: vintageGrade.includes('A+')}"  @click="selectFilter('vintageGrade','A+')">A+</button>
@@ -138,10 +138,15 @@ export default {
             if(btnType === 'category'){
               this.category = btnvalue;
             }else if(btnType === 'vintageGrade'){
+
               if(this.vintageGrade.includes(btnvalue)){
                 this.vintageGrade = this.vintageGrade.filter((item, index) => {return item != btnvalue;});
               }else{
-                this.vintageGrade.push(btnvalue);
+                if(btnvalue == ''){
+                  this.vintageGrade = [btnvalue, 'S+', 'A+', 'A', 'B+', 'B'];    
+                }else{
+                  this.vintageGrade.push(btnvalue);    
+                }
               }
             }else if(btnType === 'productType' && btnvalue === 'vintage'){ 
                 this.productType = btnvalue;

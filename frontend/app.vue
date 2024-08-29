@@ -11,7 +11,7 @@
           상품유형 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.productType != undefined"> 1 </span>
         </button> 
         <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && this.filterData.vintageGrade.length > 0}" @click="toggleFilterPopup()">
-          빈티지 등급 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.vintageGrade.length > 0"> {{this.filterData.vintageGrade.length}} </span>
+          빈티지 등급 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.vintageGrade.length > 0"> {{this.filterData.vintageGrade.include('') ? this.filterData.vintageGrade.length -1 : this.filterData.vintageGrade.length}} </span>
         </button>
         <button class="filter-dropdown" :class="{active : Object.keys(this.filterData).length != 0 && this.filterData.deliveryType.length > 0}" @click="toggleFilterPopup()">
           배송 <span v-if="Object.keys(this.filterData).length != 0 && this.filterData.deliveryType.length > 0"> 1 </span>
