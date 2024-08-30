@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios';
+import '../public/css/productItem.css'
 
 export default {
   data() {
@@ -84,76 +85,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-
-.product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-.product-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #fff;
-  text-align: center;
-  cursor: pointer;
-}
-
-.product-image {
-  width: 100%;
-  height: auto;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 12px;
-}
-
-.product-info {
-  text-align: left;
-}
-
-.product-name {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.product-price {
-  font-size: 16px;
-  color: #333;
-  margin: 8px 0;
-  font-weight: bold;
-}
-
-.product-description {
-  font-size: 14px;
-  color: #777;
-}
-.delivery-categroy{
-  display: inline;
-  float: left;
-  padding: 3px 7px 4px 7px;
-  margin-right: 2px;
-  background-color: lightgray;
-  color: slategray;
-  border-radius: 9px;
-  text-align: center;
-  font-size: 12px;
-}
-.pagination{
-  margin-top: 0.5rem;
-  text-align: center;
-}
-.pagination .custom-button {
-  background-color: black;
-  border: 1px solid #ccc;
-  color: #fff;
-  padding: 8px 12px;
-  margin: 0 5px;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-</style>
