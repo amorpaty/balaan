@@ -8,7 +8,7 @@
         </header>
       </div>
       <!--Filter Select -->
-      <Select @sendData="sendData" v-bind:filterData="filterData"></Select>
+      <Select @sendData="sendData" v-bind:filterData="filterData" v-bind:filterType="filterType"></Select>
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ import Select from './Select.vue';
 
 export default {
   name: 'FilterPopup',
-  props: ["isFilterPopupVisible", "filterData"],
+  props: ["isFilterPopupVisible", "filterData", "filterType"],
   components : {
     Select,
   },

@@ -1,15 +1,15 @@
 <template>
      <div class="filter-content">
-        <div class="filter-title" @click="toggleCategory">카테고리</div>
+        <div class="filter-title" @click="toggleCategory" ref="categoryFilter">카테고리</div>
         <transition name="slide">
-          <div v-if="isCategoryVisible" class="filter-group">
+          <div v-if="isCategoryVisible" class="filter-group" >
             <button class="filter-option" :class="{ active: category == ''}" @click="selectFilter('category','')">전체</button>
             <button class="filter-option" :class="{ active: category == 'Clothes' }" @click="selectFilter('category', 'Clothes')">의류</button>
             <button class="filter-option" :class="{ active: category == 'Shoes' }" @click="selectFilter('category','Shoes')">신발</button>
             <button class="filter-option" :class="{ active: category == 'Bag' }" @click="selectFilter('category','Bag')">가방</button>
           </div>
         </transition>
-        <div class="filter-title" @click="toggleType">상품유형</div>
+        <div class="filter-title" @click="toggleType" ref="productTypeFilter">상품유형</div>
         <transition name="slide">
           <div v-if="isTypeVisible" class="filter-group">
             <button class="filter-option" :class="{ active: productType == ''}" @click="selectFilter('productType', '')">전체</button>
@@ -19,7 +19,7 @@
           </div>
         </transition>
 
-        <div class="filter-title" @click="togglevintageGrade">빈티지 등급</div>
+        <div class="filter-title" @click="togglevintageGrade" ref="vintageGradeFilter">빈티지 등급</div>
         <transition name="slide">
           <div v-if="productType == 'vintage' || isvintageGradeVisible" class="filter-group">
             <button class="filter-option vintage" :class="{ active: vintageGrade.includes('')}"  @click="selectFilter('vintageGrade', '')">전체</button>
@@ -31,7 +31,7 @@
           </div>
         </transition>
         
-        <div class="filter-title" @click="toggleDeliveryType">배송</div>
+        <div class="filter-title" @click="toggleDeliveryType" ref="deliveryTypeFilter">배송</div>
         <transition name="slide">
           <div v-if="isDeliveryTypeVisible" class="filter-group">
             <button class="filter-option vintage" :class="{ active: deliveryType.includes('domestic')}"  @click="selectFilter('deliveryType', 'domestic')">국내배송</button>
@@ -40,7 +40,7 @@
           </div>
         </transition>
 
-        <div class="filter-title" @click="togglePrice">가격</div>
+        <div class="filter-title" @click="togglePrice" ref="priceFilter">가격</div>
         <transition name="slide">
           <div v-if="isPriceVisible" class="filter-group">
             <RangeSlider
@@ -76,7 +76,7 @@ import RangeSlider from 'vue-simple-range-slider';
 
 export default {
     name: 'FilterSelect',
-    props : ["filterData"],
+    props : ["filterData", 'filterType'],
     data() {
       return {
         isCategoryVisible: true,
@@ -84,6 +84,7 @@ export default {
         isvintageGradeVisible: false,
         isDeliveryTypeVisible : true,
         isPriceVisible: true,
+        filterType : this.filterType,
         category : Object.keys(this.filterData).length != 0 &&  this.filterData.categry != undefined ? this.filterData.category : '',               //카테고리
         productType : Object.keys(this.filterData).length != 0 &&  this.filterData.productType != undefined ? this.filterData.productType : '',     //상품유형
         vintageGrade : Object.keys(this.filterData).length != 0 &&  this.filterData.vintageGrade.length != 0 ? this.filterData.vintageGrade : [],   //빈티지타입
@@ -94,8 +95,9 @@ export default {
     components : {
         RangeSlider
     },
-    created (){ // 팝업이 켜질 때 상품 건수 조회
+    created (){ // 팝업이 켜질 때 상품 건수 조회 / 스크롤 기능
       this.fetchProductCount(); 
+      this.scrollToFilter();
     },
     methods: {
         toggleCategory() {
@@ -132,6 +134,14 @@ export default {
             throw new Exception();
           }
         },
+        scrollToFilter() {// 스크롤 이동 메서드
+            this.$nextTick(() => {
+                const filterElement = this.$refs[this.filterType];
+                if (filterElement) {
+                    filterElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        },
         selectFilter(btnType, btnvalue){ //필터 선택 
             //btnType : category : 카테고리, type : 상품유형, vintageGrade : 빈티지등급 
             //btnvalue : 
@@ -150,7 +160,7 @@ export default {
               }
             }else if(btnType === 'productType' && btnvalue === 'vintage'){ 
                 this.productType = btnvalue;
-                this.isvintageGradeVisible = true;  
+                this.isvintageGradeVisible = true; 
             }else if(btnType === 'productType' && btnvalue !== 'vintage'){
                 this.productType = btnvalue;
                 this.isvintageGradeVisible = false;
@@ -160,7 +170,7 @@ export default {
                 this.deliveryType = this.deliveryType.filter((item, index) => {return item != btnvalue;});
               }else{
                 this.deliveryType.push(btnvalue);
-              }
+              }             
             }else if(btnType === 'priceRange'){
                 this.value = btnvalue.split(",");
             }
@@ -186,7 +196,7 @@ export default {
           }
           this.$emit('sendData', data);
         }
-    }, 
+    },
   };
   </script>
   
